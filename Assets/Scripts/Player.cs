@@ -30,20 +30,25 @@ public class Player : MonoBehaviour
     
     void Move()
     {
-        Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
-        transform.position += movement * Time.deltaTime * speed;
-        
-        if (Input.GetAxis("Horizontal") > 0f)
+        //Move o personagem em uma posição - Forma incorreta se usamos rigid body
+        //Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
+        //transform.position += movement * Time.deltaTime * speed;
+
+        float movement = Input.GetAxis("Horizontal");
+
+        body.velocity = new Vector2(movement * speed, body.velocity.y);
+
+        if (movement > 0f)
         {
             anim.SetBool("walk", true);
             transform.eulerAngles = new Vector3(0f, 0f, 0f);
         }
-        if (Input.GetAxis("Horizontal") < 0f)
+        if (movement < 0f)
         {
             anim.SetBool("walk", true);
             transform.eulerAngles = new Vector3(0f,180f,0f);
         }
-        if (Input.GetAxis("Horizontal") == 0f)
+        if (movement == 0f)
         {
             anim.SetBool("walk", false);
         }
